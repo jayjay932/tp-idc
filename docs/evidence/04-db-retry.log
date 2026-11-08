@@ -1,0 +1,30 @@
+$ python -m datapipeline run --directory C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv --database sqlite:///C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\retry.db --db-failures 2 --delay 0
+
+{"inserted": 3, "skipped": 0}
+{
+  "files": 3,
+  "transactions": 18,
+  "flagged": 6,
+  "total_cents": 4920003,
+  "sent_by_iban": {
+    "DE89370400440532013000": 1530000,
+    "FR1420041010050500013M02606": 3390003
+  },
+  "sent_by_bank": {
+    "Banque A": 3390003,
+    "Banque B": 1530000
+  },
+  "received_by_iban": {
+    "DE89370400440532013000": 3030003,
+    "GB82WEST12345698765432": 1890000
+  }
+}
+2026-11-08 11:17:56,080 WARNING insertion base : tentative 1/4 échouée : Incident temporaire simulé
+2026-11-08 11:17:56,081 INFO Nouvelle tentative dans 0.00 s
+2026-11-08 11:17:56,099 WARNING insertion base : tentative 2/4 échouée : Incident temporaire simulé
+2026-11-08 11:17:56,100 INFO Nouvelle tentative dans 0.00 s
+2026-11-08 11:17:56,129 INFO INSÉRÉ : C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv\transactions_01.csv (6 transactions)
+2026-11-08 11:17:56,173 INFO INSÉRÉ : C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv\transactions_02.csv (6 transactions)
+2026-11-08 11:17:56,216 INFO INSÉRÉ : C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv\transactions_03.csv (6 transactions)
+
+EXIT_CODE=0 (attendu=0)

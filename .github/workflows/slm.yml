@@ -1,0 +1,28 @@
+name: Test SLM réel (manuel)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ollama:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: docker compose --profile ai up -d ollama
+      - name: Attendre Ollama et télécharger le modèle
+        run: |
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:11434/api/tags; then break; fi
+            sleep 2
+          done
+          docker compose exec -T ollama ollama pull qwen2.5:1.5b
+      - env:
+          TEST_OLLAMA_URL: http://localhost:11434
+          SLM_MODEL: qwen2.5:1.5b
+        run: python -m unittest tests.test_extraction.ExtractionTests.test_real_slm -v
+      - if: always()
+        run: docker compose --profile ai down

@@ -1,0 +1,26 @@
+$ python -m datapipeline run --directory C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv --database sqlite:///C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\failure.db
+
+{"inserted": 0, "skipped": 3}
+{
+  "files": 3,
+  "transactions": 18,
+  "flagged": 6,
+  "total_cents": 4920003,
+  "sent_by_iban": {
+    "DE89370400440532013000": 1530000,
+    "FR1420041010050500013M02606": 3390003
+  },
+  "sent_by_bank": {
+    "Banque A": 3390003,
+    "Banque B": 1530000
+  },
+  "received_by_iban": {
+    "DE89370400440532013000": 3030003,
+    "GB82WEST12345698765432": 1890000
+  }
+}
+2026-11-08 11:17:54,891 INFO IGNORÉ (déjà traité) : C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv\transactions_01.csv
+2026-11-08 11:17:54,926 INFO IGNORÉ (déjà traité) : C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv\transactions_02.csv
+2026-11-08 11:17:54,936 INFO IGNORÉ (déjà traité) : C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv\transactions_03.csv
+
+EXIT_CODE=0 (attendu=0)

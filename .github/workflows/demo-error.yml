@@ -1,0 +1,25 @@
+name: Démonstration échec puis correction
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: 'invalid échoue volontairement ; corrected réussit'
+        type: choice
+        options: [invalid, corrected]
+        default: invalid
+permissions:
+  contents: read
+jobs:
+  demonstration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m datapipeline generate
+      - name: Injecter un CSV invalide
+        if: inputs.scenario == 'invalid'
+        run: python -c "from pathlib import Path; p=Path('data/incoming/transactions_01.csv'); p.write_bytes(p.read_bytes().replace(b'100.00',b'invalide',1))"
+      - name: Exécuter la pipeline
+        run: python -m datapipeline run

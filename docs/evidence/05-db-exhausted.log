@@ -1,0 +1,27 @@
+$ python -m datapipeline run --directory C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv --database sqlite:///C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\exhaust.db --db-failures 9 --attempts 3 --delay 0
+
+2026-11-08 11:17:56,877 WARNING insertion base : tentative 1/3 échouée : Incident temporaire simulé
+2026-11-08 11:17:56,877 INFO Nouvelle tentative dans 0.00 s
+2026-11-08 11:17:56,884 WARNING insertion base : tentative 2/3 échouée : Incident temporaire simulé
+2026-11-08 11:17:56,885 INFO Nouvelle tentative dans 0.00 s
+2026-11-08 11:17:56,893 WARNING insertion base : tentative 3/3 échouée : Incident temporaire simulé
+2026-11-08 11:17:56,893 ERROR insertion base : nombre maximal de tentatives atteint
+2026-11-08 11:17:56,893 ERROR PIPELINE EN ÉCHEC
+Traceback (most recent call last):
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\__main__.py", line 68, in main
+    print(json.dumps(process(source,db,fault,args.attempts,args.delay)),flush=True)
+                     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\pipeline.py", line 18, in process
+    inserted = database.insert_file(digest, key, rows, fault, attempts, delay)
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\database.py", line 100, in insert_file
+    return retry(insert, attempts=attempts, delay=delay, transient=self.transient, label='insertion base')
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\retry.py", line 23, in retry
+    return operation()
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\database.py", line 98, in insert
+    fault.trigger()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\retry.py", line 15, in trigger
+    raise TemporaryError('Incident temporaire simulé')
+datapipeline.retry.TemporaryError: Incident temporaire simulé
+
+EXIT_CODE=1 (attendu=1)

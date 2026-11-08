@@ -1,0 +1,32 @@
+$ python -m datapipeline run --directory C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\csv --database sqlite:///C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\failure.db
+
+2026-11-08 11:17:51,716 ERROR PIPELINE EN ÉCHEC
+Traceback (most recent call last):
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\domain.py", line 53, in validate_record
+    raise ValueError('format décimal invalide')
+ValueError: format décimal invalide
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\domain.py", line 72, in parse_csv
+    rows.append(validate_record(row))
+                ~~~~~~~~~~~~~~~^^^^^
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\domain.py", line 60, in validate_record
+    raise ValidationError("Montant positif avec au maximum deux décimales requis") from exc
+datapipeline.domain.ValidationError: Montant positif avec au maximum deux décimales requis
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\__main__.py", line 68, in main
+    print(json.dumps(process(source,db,fault,args.attempts,args.delay)),flush=True)
+                     ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\pipeline.py", line 17, in process
+    rows = flag_transactions(parse_csv(content))
+                             ~~~~~~~~~^^^^^^^^^
+  File "C:\Users\jason\Downloads\TP_IDC_Complet\tp-idc\datapipeline\domain.py", line 74, in parse_csv
+    raise ValidationError(f"Ligne {number} : {exc}") from exc
+datapipeline.domain.ValidationError: Ligne 2 : Montant positif avec au maximum deux décimales requis
+
+EXIT_CODE=1 (attendu=1)

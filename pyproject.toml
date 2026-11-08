@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tp-idc-pipeline"
+version = "1.0.0"
+description = "Pipeline financière CI/CD pédagogique"
+requires-python = ">=3.11"
+dependencies = ["boto3>=1.35,<2", "psycopg[binary]>=3.2,<4"]
+
+[tool.setuptools.packages.find]
+include = ["datapipeline*"]

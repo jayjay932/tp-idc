@@ -1,0 +1,4 @@
+Le 12 septembre 2026 à 14h30 UTC, le compte FR1420041010050500013M02606,
+auprès de BanqueA en France (FR), a envoyé 6200.00 euros vers le compte
+DE89370400440532013000 en Allemagne (DE).
+La date exacte de cette transaction est 2026-09-12T14:30:00+00:00.

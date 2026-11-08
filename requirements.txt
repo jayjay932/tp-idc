@@ -1,0 +1,3 @@
+# Dépendances S3 et PostgreSQL ; la pipeline SQLite et ses tests utilisent la bibliothèque standard.
+boto3>=1.35,<2
+psycopg[binary]>=3.2,<4

@@ -1,0 +1,71 @@
+name: tp-idc
+x-app: &app
+  build: .
+  environment: &app-env
+    DATABASE_URL: postgresql://${POSTGRES_USER:-pipeline}:${POSTGRES_PASSWORD:-tp-db-change-me}@postgres:5432/${POSTGRES_DB:-transactions}
+    S3_ENDPOINT: http://s3:9000
+    S3_ACCESS_KEY: ${S3_ACCESS_KEY:-tpaccess}
+    S3_SECRET_KEY: ${S3_SECRET_KEY:-tpsecret-change-me}
+    S3_BUCKET: ${S3_BUCKET:-transactions}
+    OLLAMA_URL: http://ollama:11434
+    SLM_MODEL: ${SLM_MODEL:-qwen2.5:1.5b}
+  depends_on:
+    postgres:
+      condition: service_healthy
+    s3:
+      condition: service_started
+services:
+  postgres:
+    image: postgres:16.6-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-transactions}
+      POSTGRES_USER: ${POSTGRES_USER:-pipeline}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-tp-db-change-me}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+  s3-permissions:
+    image: busybox:1.37
+    user: "0:0"
+    volumes:
+      - s3data:/data
+      - s3logs:/logs
+    command: ["sh", "-c", "chown -R 10001:10001 /data /logs"]
+  s3:
+    image: ${RUSTFS_IMAGE:-rustfs/rustfs:1.0.0}
+    environment:
+      RUSTFS_ACCESS_KEY: ${S3_ACCESS_KEY:-tpaccess}
+      RUSTFS_SECRET_KEY: ${S3_SECRET_KEY:-tpsecret-change-me}
+      RUSTFS_ADDRESS: ':9000'
+      RUSTFS_CONSOLE_ADDRESS: ':9001'
+      RUSTFS_CONSOLE_ENABLE: 'true'
+      RUSTFS_OBS_LOG_DIRECTORY: /logs
+    command: ["/data"]
+    ports:
+      - '127.0.0.1:9000:9000'
+      - '127.0.0.1:9001:9001'
+    volumes:
+      - s3data:/data
+      - s3logs:/logs
+    depends_on:
+      s3-permissions:
+        condition: service_completed_successfully
+  pipeline:
+    <<: *app
+    command: ["demo", "--source", "s3"]
+  ollama:
+    image: ollama/ollama:0.5.7
+    ports:
+      - '127.0.0.1:11434:11434'
+    volumes:
+      - ollama:/root/.ollama
+    profiles: ["ai"]
+volumes:
+  pgdata:
+  s3data:
+  s3logs:
+  ollama:

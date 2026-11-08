@@ -1,0 +1,13 @@
+$ python -m datapipeline inspect --database sqlite:///C:\Users\jason\AppData\Local\Temp\tmp1l_50iod\exhaust.db
+
+{
+  "files": 0,
+  "transactions": 0,
+  "flagged": 0,
+  "total_cents": 0,
+  "sent_by_iban": {},
+  "sent_by_bank": {},
+  "received_by_iban": {}
+}
+
+EXIT_CODE=0 (attendu=0)
