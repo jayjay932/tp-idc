@@ -362,6 +362,7 @@ L'application appelle `POST /api/generate`, envoie un schéma JSON, désactive l
 
 Le modèle reste probabiliste. Un schéma JSON garantit une structure, pas l'exactitude factuelle. Pour le tester réellement : lancer le workflow **Test SLM réel (manuel)** ou définir en local :
 
+
 ```powershell
 $env:TEST_OLLAMA_URL="http://localhost:11434"
 $env:SLM_MODEL="qwen2.5:1.5b"
